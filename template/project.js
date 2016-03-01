@@ -12,7 +12,10 @@ module.exports = function(config){
             name: 'index-css',
             type: 'css',
             rule: '/css/index',
-            file: ['./src/css/index.css']
+            file: [
+                './node_modules/simplize/build/index.css',
+                './src/css/index.css'
+            ]
         },
         {
             name: 'index-html',
