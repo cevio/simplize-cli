@@ -14,7 +14,8 @@ module.exports = function(config){
             rule: '/css/index',
             file: [
                 './node_modules/simplize/build/index.css',
-                './src/css/index.css'
+                './src/css/index.css',
+                './src/css/index.scss'
             ]
         },
         {
