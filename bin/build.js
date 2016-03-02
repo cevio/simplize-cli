@@ -28,6 +28,7 @@ var builder = module.exports = function(){
     .then(service.buildJavascript.bind(service))
     .then(service.buildCss.bind(service))
     .then(service.rebuildHTML.bind(service))
+    .then(service.copyFiles.bind(service))
     .then(service.resolve.bind(service))
     .then(util.exit)
     .catch(util.exit);
@@ -224,7 +225,73 @@ Service.prototype.rebuildHTML = function(){
     });
 }
 
-Service.prototype.resolve = function(){
+Service.prototype.copyFiles = function(){
+    var that = this;
+    return new Promise(function(resolve, reject){
+        try{
+            var result = [];
+            var configFiles = that.configs.projects[that.project].files;
+            var src = path.resolve(process.cwd(), 'src');
+            var build = path.resolve(process.cwd(), 'build');
+            if ( configFiles ){
+                if ( Array.isArray(configFiles) ){
+                    configFiles.forEach(function(file){
+                        var relative, realpath;
+                        file = path.resolve(process.cwd(), file);
+                        if ( fs.existsSync(file) ){
+                            var st = fs.statSync(file);
+                            if ( st.isFile() ){
+                                var fileDirname = path.dirname(file);
+                                var filename = path.basename(file);
+                                relative = path.relative(src, fileDirname);
+                                if ( relative.length ){
+                                    realpath = path.resolve(build, relative, filename);
+                                }else{
+                                    realpath = path.resolve(build, filename);
+                                }
+                                fs.copySync(file, realpath);
+                                result.push({
+                                    from: file,
+                                    to: realpath
+                                });
+                            }
+                            else if ( st.isDirectory() ){
+                                relative = path.relative(src, file);
+                                realpath = path.resolve(build, relative);
+                                fs.copySync(file, realpath);
+                                result.push({
+                                    from: file,
+                                    to: realpath
+                                });
+                            }
+                        }
+                    });
+                }else{
+                    for ( var i in configFiles ){
+                        var from = i;
+                        var to = configFiles[i];
+                        var file = path.resolve(process.cwd(), from);
+                        var tmp = path.resolve(process.cwd(), to);
+                        if ( fs.existsSync(file) ){
+                            fs.copySync(file, tmp);
+                            result.push({
+                                from: file,
+                                to: tmp
+                            });
+                        }
+                    }
+                }
+                resolve(result);
+            }else{
+                resolve(result);
+            }
+        }catch(e){
+            reject(e);
+        }
+    });
+}
+
+Service.prototype.resolve = function(results){
     var that = this;
     return new Promise(function(resolve, reject){
         var result = [];
@@ -249,6 +316,17 @@ Service.prototype.resolve = function(){
                 console.log(text);
             });
         }
+
+        if ( results.length ){
+            results.forEach(function(res){
+                console.log(clc.blackBright('------------'));
+                console.log(clc.blackBright('[copy]  ' + res.from));
+                console.log(clc.blackBright('[to]    ' + res.to));
+            })
+        }
+
+        console.log(clc.green('------------\n[100%]  ' + that.project + '\n'));
+        console.log(clc.magentaBright('Done!\n'));
         resolve();
     });
 }
