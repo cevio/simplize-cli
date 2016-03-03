@@ -7,3 +7,4 @@ explorations
 coverage
 perf
 *.map
+npm-debug.log

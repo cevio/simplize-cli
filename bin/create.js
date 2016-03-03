@@ -32,7 +32,9 @@ creator.makeProject = function(project, dir){
         return creator.makePackageJSON(project, dir);
     }).then(function(){
         console.log(clc.green('\n[' + new Date() + ']') + ' Project ' + project + ' created.');
-        console.log('\n------------------------------------------------------------');
+        console.log('\n');
+        console.log(clc.magentaBright('> npm install --save simplize\n'));
+        console.log('------------------------------------------------------------');
     }).catch(function(err){
         util.exit(err);
     }).then(function(){
