@@ -5,25 +5,15 @@ exports.home = {
     order: 1,
     webviews: {
         index: {
-            data: {},
             events: {
-                load: function(){
-                    console.log('index webview load.');
-                },
-                unload: function(){
-                    console.log('index webview unload.');
-                }
+                load: function(){ console.log('index webview load.'); },
+                unload: function(){ console.log('index webview unload.'); }
             }
         },
         info: {
-            data: {},
             events: {
-                load: function(){
-                    console.log('info webview load.');
-                },
-                unload: function(){
-                    console.log('info webview unload.');
-                }
+                load: function(){ console.log('info webview load.'); },
+                unload: function(){ console.log('info webview unload.'); }
             }
         }
     }
