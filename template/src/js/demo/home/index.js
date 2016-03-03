@@ -20,6 +20,7 @@ Browser.index = function(browser){
                     alert('you had click list-button');
                 };
                 this.$headbar.class = 'white';
+                this.$toolbar.status = false;
             }
         })
     });
@@ -40,6 +41,7 @@ Browser.info = function(browser){
                 this.$headbar.right.text = '';
                 this.$headbar.right.fn = function(){};
                 this.$headbar.class = 'white';
+                this.$toolbar.status = false;
             }
         })
     });
