@@ -23,7 +23,7 @@ var server = module.exports = function(options){
     app.engine('html', ejs.renderFile);
     app.set('views', '.');
     service.init();
-    app.use(express.static('.'));
+    app.use(express.static('./src'));
     app.listen(port, ip);
     clip(url);
     console.log(clc.yellow('\nOpen: ' + url));
