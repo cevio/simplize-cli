@@ -4,8 +4,7 @@
  *  建议分模块写逻辑代码
  */
 var simplize = require('simplize');
-var resource = require('./demo/resource');
-var home = require('./demo/home');
+var resource = require('./resource');
 
 /**
  *  domReady事件
@@ -41,7 +40,10 @@ simplize.ready(function(){
      *  加载home路由
      *  分文件编写内容，便于代码维护
      */
-    home(app);
+     var homeBrowser = app.$browser('home');
+     app.$use(homeBrowser);
+     homeBrowser.$route('/info', 'info');
+     homeBrowser.$route('index');
 
     /**
      *  运行app
