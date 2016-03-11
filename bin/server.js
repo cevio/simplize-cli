@@ -7,6 +7,7 @@ var fs = require('fs');
 var ejs = require('ejs');
 var browserify = require('browserify');
 var Promise = require('es6-promise').Promise;
+var compression = require('compression');
 var css = require('../lib/css');
 var _port = 8000, _ip = '0.0.0.0';
 
@@ -21,6 +22,7 @@ var server = module.exports = function(options){
     var url = 'http://' + __ip + __port;
 
     app.engine('html', ejs.renderFile);
+    app.use(compression());
     app.set('views', '.');
     service.init();
     app.use(express.static('./src'));
