@@ -1,7 +1,7 @@
 {
   "name": "simplize-cli",
   "description": "The simplize framework cli",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "repository": {
     "type": "git",
     "url": "https://github.com/cevio/simplize-cli"
@@ -41,6 +41,7 @@
     "less-plugin-clean-css": "^1.5.1",
     "node-sass": "^3.4.2",
     "postcss": "^5.0.18",
+    "stringify": "^5.1.0",
     "uglify-js": "^2.6.2"
   },
   "devDependencies": {},

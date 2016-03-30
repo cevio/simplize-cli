@@ -11,6 +11,7 @@ var css = require('../lib/css');
 var babel = require('babel-core');
 var browserify = require("browserify");
 var babelify = require('babelify');
+var stringify = require('stringify');
 var _port = 8000, _ip = '0.0.0.0';
 
 var server = module.exports = function(options){
@@ -94,8 +95,10 @@ Service.prototype.buildJavascript = function(route, req, res){
     var that = this;
     var file = path.resolve(process.cwd(), route.file);
 
-    browserify(file)
+    browserify()
+        .transform(stringify, { appliesTo: { includeExtensions: ['.hjs', '.html', '.whatever'] } })
         .transform(babelify, {presets: ["es2015"]})
+        .add(file)
         .bundle(function(err, buf){
             if ( err ){
                 res.status(500).send('please view console for catching error.');
