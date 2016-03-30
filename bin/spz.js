@@ -31,4 +31,9 @@ program
     .description('Create a new project using simplize.')
     .action(require.sync('./build'));
 
+program
+    .command('tool')
+    .description('Create component or tools.')
+    .action(require.sync('./tool'));
+
 program.parse(process.argv);

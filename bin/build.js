@@ -3,13 +3,15 @@ var fs = require('fs-extra');
 var path = require('path');
 var inquirer = require("inquirer");
 var Promise = require('es6-promise').Promise;
-var browserify = require('browserify');
 var ug = require('uglify-js');
 var ejs = require('ejs');
 var htmlminify = require('html-minifier').minify;
 var cssPromise = require('../lib/css');
 var cssmin = require('cssmin');
 var clc = require('cli-color');
+var babel = require('babel-core');
+var browserify = require("browserify");
+var babelify = require('babelify');
 
 var builder = module.exports = function(){
     var projectjs = path.resolve(process.cwd(), 'project');
@@ -128,27 +130,28 @@ Service.prototype.buildJavascript = function(){
                 fs.exists(file, function(exist){
                     if ( !exist ) { reject('miss js file'); }
                     else{
-                        var bundleFile = path.resolve(process.cwd(), js.name + '.js');
                         var outfile = path.resolve(process.cwd(), that.stdout.js);
-                        browserify(file, {})
-                            .bundle()
-                            .pipe(fs.createWriteStream(bundleFile))
-                            .on('finish', function(){
-                                var result = ug.minify(bundleFile);
-                                fs.outputFile(outfile, result.code, 'utf8', function(err){
-                                    if ( err ) { reject(err); }
-                                    else {
-                                        that.js_path = outfile;
-                                        fs.unlink(bundleFile, function(err){
-                                            if ( err ) { reject(err); }
-                                            else{
-                                                resolve();
-                                            }
-                                        });
-                                    }
-                                })
-                            })
-                            .on('error', reject);
+
+                        browserify(file)
+                            .transform(babelify, {presets: ["es2015"]})
+                            .bundle(function(err, buf){
+                                if ( err ){ reject(err); }
+                                else{
+                                    fs.outputFile(outfile, buf, function(err){
+                                        if ( err ) { reject(err); }
+                                        else {
+                                            result = ug.minify(outfile);
+                                            fs.outputFile(outfile, result.code, 'utf8', function(err){
+                                                if ( err ) { reject(err); }
+                                                else {
+                                                    that.js_path = outfile;
+                                                    resolve();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
                     }
                 })
             }

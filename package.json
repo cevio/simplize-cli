@@ -1,7 +1,7 @@
 {
   "name": "simplize-cli",
   "description": "The simplize framework cli",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "repository": {
     "type": "git",
     "url": "https://github.com/cevio/simplize-cli"
@@ -13,13 +13,16 @@
   "files": [
     "lib",
     "bin",
-    "template"
+    "template",
+    "tool"
   ],
   "bin": {
     "spz": "./bin/spz.js"
   },
   "dependencies": {
     "autoprefixer": "^6.3.3",
+    "babel-core": "^6.7.4",
+    "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "cli-color": "^1.1.0",
     "cli-prompt": "^0.5.0",

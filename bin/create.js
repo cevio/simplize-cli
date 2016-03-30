@@ -33,7 +33,7 @@ creator.makeProject = function(project, dir){
     }).then(function(){
         console.log(clc.green('\n[' + new Date() + ']') + ' Project ' + project + ' created.');
         console.log('\n');
-        console.log(clc.magentaBright('> npm install --save simplize\n'));
+        console.log(clc.magentaBright('> npm install\n'));
         console.log('------------------------------------------------------------');
     }).catch(function(err){
         util.exit(err);
@@ -91,7 +91,9 @@ creator.packageJSON = function(name){
         "dependencies": {
             "simplize": "*"
         },
-        "devDependencies": {},
+        "devDependencies": {
+            "babel-preset-es2015": "^6.6.0"
+        },
         "scripts": {
             "build": "spz build",
             "dev": "spz server -i 0.0.0.0 -p 8000"

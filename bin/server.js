@@ -5,10 +5,12 @@ var clip = require('../lib/cliboard');
 var path = require('path');
 var fs = require('fs');
 var ejs = require('ejs');
-var browserify = require('browserify');
 var Promise = require('es6-promise').Promise;
 var compression = require('compression');
 var css = require('../lib/css');
+var babel = require('babel-core');
+var browserify = require("browserify");
+var babelify = require('babelify');
 var _port = 8000, _ip = '0.0.0.0';
 
 var server = module.exports = function(options){
@@ -39,8 +41,6 @@ function Service(app){
         util.exit('miss project.js.');
         throw new Error('miss project.js.');
     }
-
-
 
     this.app = app;
     this.config = require(path.resolve(process.cwd(), 'project'))(this);
@@ -93,39 +93,20 @@ Service.prototype.find = function(name){
 Service.prototype.buildJavascript = function(route, req, res){
     var that = this;
     var file = path.resolve(process.cwd(), route.file);
-    var bundleFile = path.resolve(process.cwd(), route.name + '.js');
-    var bundle = new Promise(function(resolve, reject){
-        browserify(file, {})
-            .bundle()
-            .pipe(fs.createWriteStream(bundleFile))
-            .on('finish', resolve)
-            .on('error', reject);
-    });
 
-    bundle.then(function(){
-        return new Promise(function(resolve, reject){
-            fs.readFile(bundleFile, 'utf8', function(err, code){
-                if ( err ) { reject(err); }
-                else {
-                    resolve(code);
-                }
-            });
+    browserify(file)
+        .transform(babelify, {presets: ["es2015"]})
+        .bundle(function(err, buf){
+            if ( err ){
+                res.status(500).send('please view console for catching error.');
+                console.error(err);
+            }
+            else{
+                res.type('js');
+                res.status(200).send(buf);
+            }
+
         });
-    }).then(function(code){
-        return new Promise(function(resolve, reject){
-            fs.unlink(bundleFile, function(err){
-                if ( err ){ reject(err); }
-                else {
-                    res.type('js');
-                    res.status(200).send(code);
-                    resolve();
-                }
-            });
-        });
-    }).catch(function(err){
-        res.status(500).send('please view console to catching error.');
-        console.error(err);
-    });
 }
 
 Service.prototype.buildCss = function(route, req, res){
@@ -140,7 +121,7 @@ Service.prototype.buildCss = function(route, req, res){
         res.type('css');
         res.status(200).send(result.join('\n'));
     }).catch(function(err){
-        res.status(500).send('please view console to catching error.');
+        res.status(500).send('please view console for catching error.');
         console.error(err);
     });
 
@@ -157,7 +138,7 @@ Service.prototype.buildHTML = function(route, req, res){
     res.render(route.template, route.data || {}, function(err, code){
         var resource = route.resource || {};
         if ( err ){
-            res.status(500).send('please view console to catching error.');
+            res.status(500).send('please view console for catching error.');
             console.error(err);
         }else{
             if ( resource.js ){

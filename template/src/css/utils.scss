@@ -8,7 +8,7 @@ $designPageWidth: 1242;
   simplize CSS 默认的字体大小为 320px 宽度下 html,body{font-size:10px};  （小于12px的fontsize 移动端能支持）
   通过对该属性值做响应式的字体大小 来实现rem单位的 适配
 */
-$pageWidthVSfontSize: 32;
+$pageWidthVSfontSize: 320/12;
 @function rem($px) {
   @return ( $px * $pageWidthVSfontSize / $designPageWidth) * 1rem;
 }
