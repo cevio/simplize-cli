@@ -12,6 +12,7 @@ var clc = require('cli-color');
 var babel = require('babel-core');
 var browserify = require("browserify");
 var babelify = require('babelify');
+var stringify = require('stringify');
 
 var builder = module.exports = function(){
     var projectjs = path.resolve(process.cwd(), 'project');
@@ -132,8 +133,10 @@ Service.prototype.buildJavascript = function(){
                     else{
                         var outfile = path.resolve(process.cwd(), that.stdout.js);
 
-                        browserify(file)
-                            .transform(babelify, {presets: ["es2015"]})
+                        browserify()
+                            .transform(stringify, { appliesTo: { includeExtensions: ['.html', '.htm', '.tmpl', '.tpl', '.hbs', '.text', '.txt', '.spz'] } })
+                            .transform(babelify, {presets: ["es2015"], plugins: ['add-module-exports']})
+                            .add(file)
                             .bundle(function(err, buf){
                                 if ( err ){ reject(err); }
                                 else{

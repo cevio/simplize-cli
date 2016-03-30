@@ -92,7 +92,8 @@ creator.packageJSON = function(name){
             "simplize": "*"
         },
         "devDependencies": {
-            "babel-preset-es2015": "^6.6.0"
+            "babel-preset-es2015": "^6.6.0",
+            "babel-plugin-add-module-exports": "^0.1.2"
         },
         "scripts": {
             "build": "spz build",

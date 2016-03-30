@@ -97,7 +97,7 @@ Service.prototype.buildJavascript = function(route, req, res){
 
     browserify()
         .transform(stringify, { appliesTo: { includeExtensions: ['.html', '.htm', '.tmpl', '.tpl', '.hbs', '.text', '.txt', '.spz'] } })
-        .transform(babelify, {presets: ["es2015"]})
+        .transform(babelify, {presets: ["es2015"], plugins: ['add-module-exports']})
         .add(file)
         .bundle(function(err, buf){
             if ( err ){
