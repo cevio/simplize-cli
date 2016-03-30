@@ -96,7 +96,7 @@ Service.prototype.buildJavascript = function(route, req, res){
     var file = path.resolve(process.cwd(), route.file);
 
     browserify()
-        .transform(stringify, { appliesTo: { includeExtensions: ['.hjs', '.html', '.whatever'] } })
+        .transform(stringify, { appliesTo: { includeExtensions: ['.html', '.htm', '.tmpl', '.tpl', '.hbs', '.text', '.txt', '.spz'] } })
         .transform(babelify, {presets: ["es2015"]})
         .add(file)
         .bundle(function(err, buf){
