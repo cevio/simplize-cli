@@ -27,12 +27,7 @@ var builder = module.exports = function(){
 
     service.prompt()
     .then(service.std.bind(service))
-    .then(service.buildHTML.bind(service))
-    .then(service.buildJavascript.bind(service))
-    .then(service.buildCss.bind(service))
-    .then(service.rebuildHTML.bind(service))
-    .then(service.copyFiles.bind(service))
-    .then(service.resolve.bind(service))
+    .then(service.choices.bind(service))
     .then(util.exit)
     .catch(util.exit);
 }
@@ -88,10 +83,59 @@ Service.prototype.std = function(){
     return new Promise(function(resolve, reject){
         that.stdin = that.find();
         that.stdout = that.configs.projects[that.project];
-        if ( !that.stdin || !that.stdout ){
+
+        if ( !that.stdout ){
             return reject('miss config data.');
         }
         resolve();
+    });
+}
+
+Service.prototype.choices = function(){
+    var that = this;
+    return new Promise(function(resolve, reject){
+        if ( that.stdout.tool ){
+            that.js = that.stdout.resource;
+            that.jsmode = that.stdout.mode;
+            that.jslibrary = that.stdout.library;
+            that.jsmain = that.stdout.main;
+            Promise.resolve()
+            .then(that.buildJavascript.bind(that))
+            .then(that.resolve.bind(that))
+            .then(that.writePackageFile.bind(that))
+            .then(resolve)
+            .catch(reject);
+        }
+        else{
+            Promise.resolve()
+            .then(that.buildHTML.bind(that))
+            .then(that.buildJavascript.bind(that))
+            .then(that.buildCss.bind(that))
+            .then(that.rebuildHTML.bind(that))
+            .then(that.copyFiles.bind(that))
+            .then(that.resolve.bind(that))
+            .then(resolve)
+            .catch(reject);
+        }
+    });
+}
+
+Service.prototype.writePackageFile = function(){
+    var that = this;
+    return new Promise(function(resolve, reject){
+        var pfile = path.resolve(process.cwd(), 'package.json');
+        pkg = require(pfile);
+        if ( pkg && that.jsmain ){
+            pkg.main = that.jsmain;
+            fs.writeFile(pfile, JSON.stringify(pkg, null, 2), 'utf8', function(err){
+                if ( err ){ reject(err); }
+                else{
+                    resolve();
+                }
+            })
+        }else{
+            reject(new Error('miss package.json or main option'));
+        }
     });
 }
 
@@ -132,8 +176,13 @@ Service.prototype.buildJavascript = function(){
                     if ( !exist ) { reject('miss js file'); }
                     else{
                         var outfile = path.resolve(process.cwd(), that.stdout.js);
+                        var options = {};
 
-                        browserify()
+                        if ( that.jsmode == 'umd' ){
+                            options.standalone = that.jslibrary;
+                        }
+
+                        browserify(options)
                             .transform(stringify, { appliesTo: { includeExtensions: ['.html', '.htm', '.tmpl', '.tpl', '.hbs', '.text', '.txt', '.spz'] } })
                             .transform(babelify, {presets: ["es2015"], plugins: ['add-module-exports']})
                             .add(file)
@@ -323,7 +372,7 @@ Service.prototype.resolve = function(results){
             });
         }
 
-        if ( results.length ){
+        if ( results && results.length ){
             results.forEach(function(res){
                 console.log(clc.blackBright('------------'));
                 console.log(clc.blackBright('[copy]  ' + res.from));
