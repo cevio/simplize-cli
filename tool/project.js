@@ -1,9 +1,15 @@
 module.exports = function(config){
     var result = {};
     // 写入路由规则
-    result.routes = [{
-            name: 'compare-tool',
+    result.routes = [
+        {
+            name: 'compare-tool-js',
             file: './src/js/index.js'
+        },
+        {
+            name: 'compare-tool-css',
+            file: ['./src/css/index.scss'],
+            type: 'tool'
         },
         {
             name: 'index-js',
@@ -40,8 +46,12 @@ module.exports = function(config){
         },
         "compare-tool": {
             tool: true,
-            resource: 'compare-tool',
+            resource: {
+                js: 'compare-tool-js',
+                css: 'compare-tool-css'
+            },
             js: "./build/index.js",
+            css: "./build/index.css",
             mode: 'umd',
             library: 'toolname',
             main: 'build/index.js'

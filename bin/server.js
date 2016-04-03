@@ -56,8 +56,9 @@ Service.prototype.init = function(){
                 rule = route.rule,
                 method = (route.method || 'get').toLowerCase(),
                 callback = route.callback || function(){};
-
-            that.create(type, rule, method, callback, route);
+            if ( type !== 'tool' ){
+                that.create(type, rule, method, callback, route);
+            }
         });
     }
 }
