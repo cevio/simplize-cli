@@ -95,14 +95,16 @@ Service.prototype.choices = function(){
     var that = this;
     return new Promise(function(resolve, reject){
         if ( that.stdout.tool ){
-            that.js = that.stdout.resource;
+            that.js = that.stdout.resource.js;
+            that.css = that.stdout.resource.css;
             that.jsmode = that.stdout.mode;
             that.jslibrary = that.stdout.library;
             that.jsmain = that.stdout.main;
             Promise.resolve()
             .then(that.buildJavascript.bind(that))
-            .then(that.resolve.bind(that))
+            .then(that.buildCss.bind(that))
             .then(that.writePackageFile.bind(that))
+            .then(that.resolve.bind(that))
             .then(resolve)
             .catch(reject);
         }
