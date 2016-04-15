@@ -44,7 +44,7 @@ creator.makeProject = function(project, dir){
 
 creator.copyProject = function(dir){
     return new Promise(function(resolve, reject){
-        var templateDir = path.resolve(__dirname, '../template');
+        var templateDir = path.resolve(__dirname, '../template/project');
         fs.copy(templateDir, dir, function(err){
             if ( err ){ reject(err) }
             else{
@@ -78,33 +78,41 @@ creator.download = function(dir){
 }
 
 creator.packageJSON = function(name){
+    var _name = name.replace(/\-(\w)/g, function(all, letter){
+      return letter.toUpperCase();
+    });
     return {
-        "name": name,
-        "description": name + " project by simplize",
-        "version": "0.0.1",
-        "keywords": ["simplize"],
-        "repository": {
-            "type": "git",
-            "url": ""
-        },
-        "timestamp": new Date().getTime(),
-        "dependencies": {
-            "simplize": "*"
-        },
-        "devDependencies": {
-            "babel-preset-es2015": "^6.6.0",
-            "babel-plugin-add-module-exports": "^0.1.2"
-        },
-        "scripts": {
-            "build": "spz build",
-            "dev": "spz server -i 0.0.0.0 -p 8000"
-        },
-        "engine-strict": true,
-        "engines": {
-            "node": ">= 4.0.0"
-        },
-        "licenses": [
-            { "type": "MIT" }
-        ]
+      "name": name,
+      "version": "1.0.0",
+      "description": name + " Project",
+      "main": "webpack.config.js",
+      "scripts": {
+        "dev": "cross-env NODE_ENV=dev && node_modules/.bin/webpack-dev-server --progress --colors --inline --hot --display-error-details --content-base src/",
+        "build": "rimraf ./build && cross-env NODE_ENV=production webpack -p"
+      },
+      "author": "",
+      "license": "MIT",
+      "project-type": "var",
+      "project-library": _name,
+      "devDependencies": {
+          "autoprefixer": "^6.3.6",
+          "babel-core": "^6.7.6",
+          "babel-loader": "^6.2.4",
+          "babel-plugin-add-module-exports": "^0.1.2",
+          "babel-preset-es2015": "^6.6.0",
+          "cross-env": "^1.0.7",
+          "css-loader": "^0.23.1",
+          "extract-text-webpack-plugin": "^1.0.1",
+          "html-loader": "^0.4.3",
+          "html-minify-loader": "^1.1.0",
+          "html-webpack-plugin": "^2.15.0",
+          "less-loader": "^2.2.3",
+          "postcss-loader": "^0.8.2",
+          "style-loader": "^0.13.1",
+          "webpack": "^1.12.15",
+          "webpack-dev-server": "^1.14.1",
+          "simplize": "*",
+          "rimraf": "*"
+      }
     }
 }

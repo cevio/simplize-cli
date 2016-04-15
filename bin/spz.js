@@ -20,18 +20,6 @@ program
     .action(require.sync('./create'));
 
 program
-    .command('server')
-    .description('start debug service')
-    .option('-p, --port <port>', 'server port')
-    .option('-i, --ip <ip>', 'server ip')
-    .action(require.sync('./server'));
-
-program
-    .command('build')
-    .description('Create a new project using simplize.')
-    .action(require.sync('./build'));
-
-program
     .command('tool')
     .description('Create component or tools.')
     .action(require.sync('./tool'));

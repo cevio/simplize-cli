@@ -13,36 +13,18 @@
   "files": [
     "lib",
     "bin",
-    "template",
-    "tool"
+    "template"
   ],
   "bin": {
     "spz": "./bin/spz.js"
   },
   "dependencies": {
-    "autoprefixer": "^6.3.3",
-    "babel-core": "^6.7.4",
-    "babelify": "^7.2.0",
-    "browserify": "^13.0.0",
     "cli-color": "^1.1.0",
     "cli-prompt": "^0.5.0",
     "commander": "^2.9.0",
-    "compression": "^1.6.1",
-    "cssmin": "^0.4.3",
-    "ejs": "^2.4.1",
     "es6-promise": "^3.1.2",
-    "express": "^4.13.4",
     "fs-extra": "^0.26.5",
-    "html-minifier": "^1.2.0",
-    "inquirer": "^0.11.0",
-    "kexec": "^2.0.2",
-    "less": "^2.6.0",
-    "less-plugin-autoprefix": "^1.5.1",
-    "less-plugin-clean-css": "^1.5.1",
-    "node-sass": "^3.4.2",
-    "postcss": "^5.0.18",
-    "stringify": "^5.1.0",
-    "uglify-js": "^2.6.2"
+    "kexec": "^2.0.2"
   },
   "devDependencies": {},
   "scripts": {},
