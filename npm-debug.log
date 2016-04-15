@@ -1,0 +1,103 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@2.14.7
+3 info using node@v4.2.1
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/EnvirsProject/envirs/simplize-cli',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/evio/.npm/simplize-cli/1.0.1/package.tgz not in flight; packing
+9 verbose tar pack [ '/Users/evio/.npm/simplize-cli/1.0.1/package.tgz',
+9 verbose tar pack   '/EnvirsProject/envirs/simplize-cli' ]
+10 verbose tarball /Users/evio/.npm/simplize-cli/1.0.1/package.tgz
+11 verbose folder /EnvirsProject/envirs/simplize-cli
+12 info prepublish simplize-cli@1.0.1
+13 verbose addLocalTarball adding from inside cache /Users/evio/.npm/simplize-cli/1.0.1/package.tgz
+14 silly cache afterAdd simplize-cli@1.0.1
+15 verbose afterAdd /Users/evio/.npm/simplize-cli/1.0.1/package/package.json not in flight; writing
+16 verbose afterAdd /Users/evio/.npm/simplize-cli/1.0.1/package/package.json written
+17 silly publish { name: 'simplize-cli',
+17 silly publish   description: 'The simplize framework cli',
+17 silly publish   version: '1.0.1',
+17 silly publish   repository:
+17 silly publish    { type: 'git',
+17 silly publish      url: 'git+https://github.com/cevio/simplize-cli.git' },
+17 silly publish   keywords: [ 'toolkit', 'cli' ],
+17 silly publish   files: [ 'lib', 'bin', 'template' ],
+17 silly publish   bin: { spz: './bin/spz.js' },
+17 silly publish   dependencies:
+17 silly publish    { 'cli-color': '^1.1.0',
+17 silly publish      'cli-prompt': '^0.5.0',
+17 silly publish      commander: '^2.9.0',
+17 silly publish      'es6-promise': '^3.1.2',
+17 silly publish      'fs-extra': '^0.26.5',
+17 silly publish      kexec: '^2.0.2' },
+17 silly publish   devDependencies: {},
+17 silly publish   scripts: {},
+17 silly publish   'engine-strict': true,
+17 silly publish   engines: { node: '>= 0.12' },
+17 silly publish   licenses: [ { type: 'MIT' } ],
+17 silly publish   gitHead: 'fb2288ea62b517a40edb8fb57a4ca278edd6a7f0',
+17 silly publish   bugs: { url: 'https://github.com/cevio/simplize-cli/issues' },
+17 silly publish   readme: 'ERROR: No README data found!',
+17 silly publish   homepage: 'https://github.com/cevio/simplize-cli#readme',
+17 silly publish   _id: 'simplize-cli@1.0.1',
+17 silly publish   _shasum: '6721e9e5cbe0db9370669e679ae944b8eb053ebe',
+17 silly publish   _from: '.' }
+18 verbose getPublishConfig undefined
+19 silly mapToRegistry name simplize-cli
+20 silly mapToRegistry using default registry
+21 silly mapToRegistry registry https://registry.npmjs.org/
+22 silly mapToRegistry uri https://registry.npmjs.org/simplize-cli
+23 verbose publish registryBase https://registry.npmjs.org/
+24 silly publish uploading /Users/evio/.npm/simplize-cli/1.0.1/package.tgz
+25 verbose request uri https://registry.npmjs.org/simplize-cli
+26 verbose request sending authorization for write operation
+27 info attempt registry request try #1 at 14:39:52
+28 verbose request using bearer token for auth
+29 verbose request id 34be1435da40ebfa
+30 http request PUT https://registry.npmjs.org/simplize-cli
+31 http 403 https://registry.npmjs.org/simplize-cli
+32 verbose headers { 'content-type': 'application/json',
+32 verbose headers   'cache-control': 'max-age=300',
+32 verbose headers   'content-length': '95',
+32 verbose headers   'accept-ranges': 'bytes',
+32 verbose headers   date: 'Fri, 15 Apr 2016 06:39:57 GMT',
+32 verbose headers   via: '1.1 varnish',
+32 verbose headers   connection: 'keep-alive',
+32 verbose headers   'x-served-by': 'cache-lhr6332-LHR',
+32 verbose headers   'x-cache': 'MISS',
+32 verbose headers   'x-cache-hits': '0',
+32 verbose headers   'x-timer': 'S1460702396.782822,VS0,VE1117',
+32 verbose headers   vary: 'Accept-Encoding' }
+33 verbose request invalidating /Users/evio/.npm/registry.npmjs.org/simplize-cli on PUT
+34 error publish Failed PUT 403
+35 verbose stack Error: "You cannot publish over the previously published version 1.0.1." : simplize-cli
+35 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+35 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+35 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+35 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+35 verbose stack     at emitTwo (events.js:87:13)
+35 verbose stack     at Request.emit (events.js:172:7)
+35 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1063:14)
+35 verbose stack     at emitOne (events.js:82:20)
+35 verbose stack     at Request.emit (events.js:169:7)
+35 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1009:12)
+36 verbose statusCode 403
+37 verbose pkgid simplize-cli
+38 verbose cwd /EnvirsProject/envirs/simplize-cli
+39 error Darwin 15.4.0
+40 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+41 error node v4.2.1
+42 error npm  v2.14.7
+43 error code E403
+44 error "You cannot publish over the previously published version 1.0.1." : simplize-cli
+45 error If you need help, you may report this error at:
+45 error     <https://github.com/npm/npm/issues>
+46 verbose exit [ 1, true ]
