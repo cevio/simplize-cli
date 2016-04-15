@@ -109,6 +109,7 @@ creator.packageJSON = function(name){
           "postcss-loader": "^0.8.2",
           "style-loader": "^0.13.1",
           "webpack": "^1.12.15",
+          "less": "^2.6.1",
           "webpack-dev-server": "^1.14.1",
           "rimraf": "*"
       }

@@ -111,6 +111,7 @@ creator.packageJSON = function(name){
           "style-loader": "^0.13.1",
           "webpack": "^1.12.15",
           "webpack-dev-server": "^1.14.1",
+          "less": "^2.6.1",
           "simplize": "*",
           "rimraf": "*"
       }

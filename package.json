@@ -1,7 +1,7 @@
 {
   "name": "simplize-cli",
   "description": "The simplize framework cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/cevio/simplize-cli"
