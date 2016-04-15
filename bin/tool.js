@@ -88,7 +88,7 @@ creator.packageJSON = function(name){
       "main": "build/index.js",
       "scripts": {
         "dev": "cross-env NODE_ENV=dev node_modules/.bin/webpack-dev-server --progress --colors --inline --hot --display-error-details --content-base src/",
-        "build": "rimraf ./build cross-env NODE_ENV=production webpack -p"
+        "build": "rimraf ./build && cross-env NODE_ENV=production webpack -p"
       },
       "author": "",
       "license": "MIT",
